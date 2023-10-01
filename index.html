@@ -7,6 +7,7 @@
   <title>柏陽詐欺チェッカー</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kiwi+Maru">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic">
 
   <meta name="msapplication-config" content="./browserconfig.xml" />
@@ -31,20 +32,10 @@
       柏陽詐欺をしているかどうかを確認できます。
     </p>
   </center>
-
-  <center>
-    <input type="text" name="" value="" class="c-form-text" placeholder="お名前を入力してください。" />
-  </center>
-
-  <center>
-    <a class="btn btn--orange btn--radius" id="pushButton" onclick="startProgress()">PUSH</a>
-  </center>
-  <h4 class="message" id="message"></h4>
-  <!-- <button onclick="startProgress()">Start Progress</button> -->
-
-  <div class="progBar">
-    <div class="bar"></div>
+  <div>
+    <p class="percentage" id="percentage"></p>
   </div>
+  <p class="text">の確率で柏陽詐欺を行っています。<br>自首しましょう。</p>
 
   <p>&nbsp;</p>
 
@@ -63,6 +54,7 @@
     header {
       width: 100%;
       padding: 15px 0;
+      margin-top: 5%;
       margin-bottom: 40px;
       text-align: center;
     }
@@ -101,107 +93,23 @@
       display: inline;
     }
 
-
-    .c-form-text {
-      margin-top: 20px;
-      margin-bottom: 10px;
-      height: 2.6em;
-      width: 50%;
-      padding: 0 16px;
-      border-radius: 4px;
-      border: none;
-      box-shadow: 0 0 0 1px #ccc inset;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-    }
-
-    .c-form-text:focus {
-      outline: 0;
-      box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
-    }
-
-
-    *,
-    *:before,
-    *:after {
-      -webkit-box-sizing: inherit;
-      box-sizing: inherit;
-    }
-
     html {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
       font-size: 62.5%;
     }
 
-    .btn,
-    a.btn,
-    button.btn {
-      font-size: 1rem;
-      font-weight: 700;
-      font-family: 'Kiwi Maru', serif;
-      line-height: 1.2;
-      position: relative;
-      display: inline-block;
-      padding: 1rem 4rem;
-      cursor: pointer;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      -ms-user-select: none;
-      user-select: none;
-      -webkit-transition: all 0.3s;
-      transition: all 0.3s;
-      text-align: center;
-      vertical-align: middle;
-      text-decoration: none;
-      letter-spacing: 0.1em;
-      color: #212529;
-      border-radius: 0.5rem;
-    }
-
-    .btn--orange,
-    a.btn--orange {
-      color: #fff;
-      background-color: #eb6100;
-    }
-
-    .btn--orange:hover,
-    a.btn--orange:hover {
-      color: #fff;
-      background: #f0741c;
-    }
-
-    a.btn--radius {
-      border-radius: 100vh;
-    }
-
-
-
-    .progBar {
-      width: 65%;
-      height: 20px;
-      background-color: #ececec;
-      position: relative;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .progBar .bar {
-      height: 100%;
-      background-color: #FFCA28;
-      width: 0;
-      transition: width 1s;
-      /* アニメーションにトランジションを追加 */
-    }
-
-    .message {
-      margin-top: 20px;
+    .percentage {
+      margin-top: 40px;
       margin-bottom: 10px;
-      margin-left: 20%;
-      font-size: 20px;
+      margin-left: 15%;
+      font-size: 80px;
+      font-family: 'Comfortaa', serif;
+      animation-name: fadeUpAnime;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      opacity: 0;
+
     }
 
     .smalltext {
@@ -209,58 +117,51 @@
       font-size: 1.2rem;
       font-family: 'Zen Maru Gothic', serif;
     }
+
+    @keyframes fadeUpAnime {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .text{
+      margin-top: 20px;
+      margin-bottom: 10px;
+      margin-left: 15%;
+      margin-right: 5%;
+      font-size: 18px;
+      font-family: 'Kiwi Maru';
+    }
+
   </style>
 
   <script>
-    let percentage = 0;
-    let progress = 0;
-    var messages = ["", "名前を送信中", "柏陽生かどうかを分析中", "学力を予想中", "柏陽詐欺をしているかを推測中", "授業の柏陽ファイルを買ったかを問い合わせ中", "柏陽生に同情中", "Youtube かめめん で検索を宣伝中", "結果を受信中"];
-    document.getElementById('message').textContent = messages[progress] + "...";
 
+    // document.getElementById('percentage').textContent = "95%";
+    let percentage = Math.round((Math.random() * 7.9 + 92) * 10) / 10;
+    // document.getElementById('percentage').textContent = percentage.toFixed(1);
 
-    function startProgress() {
-      // let obj = document.getElementsByClassName("btn")[0];
-      // opacity_now = opacity_now - 1 / 5;
-      // for (let step = 0; step < 5; step++) {
-      //   opacity_now = opacity_now - 1 / 5;
-      //   obj.style.opacity = opacity_now; // 透明度を50%に指定
-      //   setTimeout(5000);
-      // }
-
-      let obj = document.getElementsByClassName("btn")[0];
-      obj.style.opacity = 0; // 透明度を0%に指定
-
-      const progressBar = document.querySelector('.progBar .bar');
-      let repetitions = messages.length - 1;
-
-      function increaseValue() {
-        if (repetitions > 0) {
-          percentage += 100 / (messages.length - 1);
-          progress++;
-          progressBar.style.width = `${percentage}%`;
-          document.getElementById('message').textContent = messages[progress] + "...";
-
-          repetitions--;
-
-          if (repetitions === 0) {
-            changeLocation();
-            
-          } else {
-            setTimeout(increaseValue, Math.random() * 400 + 650); // n秒待って再度実行
-          }
-        }
+    var n = 0;
+    let rep = 10;
+    function increaseValue2() {
+      n = n + (percentage - n) / 40;
+      document.getElementById('percentage').textContent = n.toFixed(1) + "%";
+      rep--;
+      if (percentage - n > 0.04) {
+        setTimeout(increaseValue2, 10); // n秒待って再度実行
+      } else {
+        document.getElementById('percentage').textContent = percentage.toFixed(1) + "%";
       }
-      increaseValue(); // 初回の呼び出し
     }
 
-    function changeLocation() {
-      window.location.href = https://hataworakuni.net/
-    }
+    increaseValue2();
 
-    // PUSHボタンがクリックされたときにstartProgress関数を実行
-    // document.getElementById('pushButton').addEventListener('click', function () {
-    //   startProgress();
-    // });
+
   </script>
 
 </body>
