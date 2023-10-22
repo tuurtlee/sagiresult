@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kiwi+Maru">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Rampart+One">
+
 
   <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon-180x180.png">
   <link rel="icon" type="image/x-icon" href="./favicon.ico">
@@ -31,14 +33,16 @@
     <p class="message" id="message"></p>
     <p class="percentage" id="percentage"></p>
   </div>
-  <p class="text">の確率で柏陽詐欺を行っています。<br>自首しましょう。</p>
+  <p class="text">です。</p>
+  <p class="advice" id="advice"></p>
 
   <p>&nbsp;</p>
 
   <footer>
     <div>
       <p class="bottomtext">© Created by かめめん.</p>
-      <a href="https://www.instagram.com/owen_kame/"> <img src="icon.png" alt="inst" class="inst"> </a>
+      <a href="https://www.instagram.com/owen_kame/"> <img src="inst.png" alt="inst" class="inst"> </a>
+      <a href="https://lin.ee/eLvslmD"> <img src="line.png" alt="line" class="line"> </a>
     </div>
   </footer>
 
@@ -59,7 +63,10 @@
     }
 
     header .headline {
+      margin-top: -20px;
+      margin-bottom: 30px;
       font-size: 32px;
+      font-family: 'Rampart One';
     }
 
     .nav-list {
@@ -113,7 +120,7 @@
 
     .smalltext {
       margin: 0 10%;
-      font-size: 14px;
+      font-size: 12px;
       font-family: 'Zen Maru Gothic', serif;
     }
 
@@ -130,8 +137,8 @@
     }
 
     .text {
-      margin: 0px 5% 10px 15%;
-      font-size: 18px;
+      margin: -10px 5% 0px calc(15% + 5px);
+      font-size: 22px;
       font-family: 'Kiwi Maru';
       animation-name: fadeUpAnime;
       animation-duration: 0.8s;
@@ -154,8 +161,24 @@
       opacity: 0;
     }
 
+    .advice {
+      margin: 0px 13% 10px calc(15% + 8px);
+      font-size: 17px;
+      font-family: 'Kiwi Maru';
+      animation-name: fadeUpAnime;
+      animation-duration: 0.8s;
+      animation-fill-mode: forwards;
+      animation-delay: 1.0s;
+      opacity: 0;
+    }
+
     .inst {
-      margin-top: 10px;
+      margin: 10px;
+      width: 30px
+    }
+
+    .line {
+      margin: 10px;
       width: 30px
     }
 
@@ -166,49 +189,72 @@
     }
   </style>
 
-  <script type="text/javascript" src="sha256.js"></script>
   <script>
     // 現在のURLからパラメータ文字列を取得
     const paramsString = window.location.search;
     // URLSearchParamsオブジェクトを作成してパラメータを取得
     const searchParams = new URLSearchParams(paramsString);
     if (searchParams.get("name") === null) {
-      name = "あなたは";
+      name = "あなたの柏陽詐欺度は";
     } else {
       // 特定のパラメータを取得
-      var name = searchParams.get("name") + " さんは";
+      var name = searchParams.get("name") + " さんの柏陽詐欺度は";
     }
     document.getElementById('message').textContent = name;
 
     if (searchParams.get("per") === null) {
-      var percentage = Math.round((Math.random() * 7.9 + 92) * 10) / 10;
+      // var percentage = Math.round((Math.random() * 7.9 + 92) * 10) / 10;
+      var percentage = Math.round((Math.random() * 100) * 10) / 10;
     } else {
       // 特定のパラメータを取得
       var percentage = searchParams.get("per");
     }
 
     OnPost();
-    var n = 50;
+    decide_advise();
+    var n = 0;
     let rep = 10;
-    function increaseValue2() {
+    increaseValue();
+
+    function increaseValue() {
       n = n + (percentage - n) / 30;
       document.getElementById('percentage').textContent = n.toFixed(1) + "%";
       rep--;
       if (percentage - n > 0.04) {
-        setTimeout(increaseValue2, 10); // n秒待って再度実行
+        setTimeout(increaseValue, 10); // n秒待って再度実行
       } else {
-        document.getElementById('percentage').textContent = percentage.toFixed(1) + "%";
+        document.getElementById("percentage").textContent = percentage.toFixed(1) + "%";
       }
     }
 
     function OnPost() {
       const Http = new XMLHttpRequest();
-      const url = 'https://script.google.com/macros/s/AKfycbzY47HU-ZTqTiVFWvmnRMkrlFEKJeCufjFLSSg90odV5SO0oz_uQ7AqndX0ZDBr2cHf/exec';
+      const url = "https://script.google.com/macros/s/AKfycbzY47HU-ZTqTiVFWvmnRMkrlFEKJeCufjFLSSg90odV5SO0oz_uQ7AqndX0ZDBr2cHf/exec";
       Http.open("GET", url + "?data1=" + searchParams.get("name") + "&data2=" + percentage);
       Http.send();
     }
 
-    increaseValue2();
+    function decide_advise() {
+      if (percentage <= 0) {
+        var advice = "柏陽詐欺見破れるのは君だけ！！";
+      } else if (0 < percentage && percentage <= 20) {
+        var advice = "あなたは柏陽詐欺をしていません。おめでとうございます。";
+      } else if (20 < percentage && percentage <= 40) {
+        var advice = "柏陽詐欺をしていないからといって油断しないように。";
+      } else if (40 < percentage && percentage <= 60) {
+        var advice = "平均的な柏陽生。";
+      } else if (60 < percentage && percentage <= 80) {
+        var advice = "まだ引き返せる。とりあえず今夜はゲームしよう。";
+      } else if (80 < percentage && percentage <= 90) {
+        var advice = "自覚ないタイプの人。もう、怖い。";
+      } else if (90 < percentage && percentage <= 100) {
+        var advice = "君は完璧で究極の柏陽生！！自首あるのみ。";
+      } else if (100 < percentage) {
+        var advice = "限界突破？！？！　キモいです。";
+      }
+      document.getElementById("advice").textContent = advice;
+    }
+
 
 
   </script>
